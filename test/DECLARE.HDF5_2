@@ -1,8 +1,8 @@
-BinDeps 0.3.6
-HDF5 0.4.5
-JSON 0.3.8
-SHA 0.0.3
-URIParser 0.0.3
-https://github.com/rened/DeclarativePackages.jl.git 0758b40af08af4ae06992d2b2b922b1d4e954bad
-https://github.com/JuliaLang/METADATA.jl.git 80dc1295472e499d3cfe6ce96c84705b5f91fafa
-@osx Homebrew 0.1.10
+BinDeps 0.4.5
+HDF5 0.6.6
+JSON 0.7.0
+SHA 0.2.1
+URIParser 0.1.6
+https://github.com/FugroRoames/DeclarativePackages.jl.git 5a2d7289188fb5f11e356d811e96ea739fc325f3
+https://github.com/JuliaLang/METADATA.jl.git 4f84fd86a8edbacbf3f7c9f2514ca7253fea6013
+@osx Homebrew 0.4.0
