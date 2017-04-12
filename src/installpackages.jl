@@ -10,8 +10,8 @@ function installpackages()
     init(lines)
     packages = parselines(lines)
     needbuilding = install(packages)
-    resolve(packages, needbuilding)
-    finish()
+    resolve(packages)
+    finish(needbuilding)
 end
 
 function readfile()
@@ -200,7 +200,7 @@ function install(a::Package)
     installorlink(a.name, a.url, path, commit)
 end
 
-function resolve(packages, needbuilding)
+function resolve(packages)
     open(Pkg.dir()*"/REQUIRE","w") do io
         for pkg in packages
             if !isempty(pkg.commit) && pkg.commit[1]=='v'
@@ -223,13 +223,13 @@ function resolve(packages, needbuilding)
     end
     log(1, "Invoking Pkg.resolve() ...")
     Pkg.resolve()
-    map(x -> Pkg.build(x), needbuilding)
 end
 
 
-function finish()
+function finish(needbuilding)
     exportDECLARE(ENV["DECLARE"])
 
+    # N.B. we dont need to include the MD5 hash, it just seems safer
     if is_apple()
         md5 = strip(readstring(`md5 -q $(ENV["DECLARE"])`))
     elseif is_linux()
@@ -247,8 +247,10 @@ function finish()
         rm(dir; recursive=true)
     end
     mv(stepout(Pkg.dir(),1), dir)
-    symlink(dir, stepout(Pkg.dir())[1:end-1])
     ENV["JULIA_PKGDIR"] = dir
+
+    # now build everything after the above move
+    map(x -> Pkg.build(x), needbuilding)
 
     log(1, "Marking $dir read-only ...")
     run(pipeline(`find $dir -maxdepth 1`,`xargs chmod 555 `))
