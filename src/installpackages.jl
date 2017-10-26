@@ -21,7 +21,7 @@ function update_base_package(lines)
         pkg_base_name = basename(ENV["JULIA_PKG_NAME"])
 
         # Assumes package has .jl in string
-        pkg_idx = find(x->ismatch(Regex("$(pkg_base_name).jl"), x), lines)
+        pkg_idx = find(x->ismatch(Regex("$(pkg_base_name).jl", "i"), x), lines)
 
         log(1, "Found environment variables:")
         log(1, "  JULIA_PKG_NAME=$pkg_base_name")
