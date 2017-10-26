@@ -22,6 +22,10 @@ function update_base_package(lines)
 
         # Assumes package has .jl in string
         pkg_idx = find(x->ismatch(Regex("$(pkg_base_name).jl"), x), lines)
+        if length(pkg_idx) == 0
+            pkg_base_name = lowercase(pkg_base_name)
+            pkg_idx = find(x->ismatch(Regex("$(pkg_base_name).jl"), x), lines)
+        end
 
         log(1, "Found environment variables:")
         log(1, "  JULIA_PKG_NAME=$pkg_base_name")
