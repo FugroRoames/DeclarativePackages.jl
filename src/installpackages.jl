@@ -155,12 +155,6 @@ function parseline(a)
     if contains(nameorurl, "/")
         url = nameorurl
         name = replace(replace(split(url, "/")[end], ".git", ""), ".jl", "")
-        if ismatch(r"bitbucket", url)
-            # Workaround: As of 2017-07-13, bitbucket have started enforcing
-            # lower case URLs, even for repositories containing julia packages
-            # with upper case names.
-            url = lowercase(url)
-        end
         isregistered = false
     else
         name = nameorurl
